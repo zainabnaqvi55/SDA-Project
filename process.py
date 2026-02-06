@@ -1,38 +1,23 @@
-import load_config
+from load_config import data, regions, operations, Country
 
-regions = load_config.regions
-years = load_config.years
-operations = load_config.operations
-dashboard = load_config.dashboard
-data = load_config.data
-
-
-filtered_region = list(filter(
-    lambda row: row["Region"] in regions,
+cleaned_data = list(filter(
+    lambda r: r["Region"] != "" and r["Year"] != "" and r["Value"] != "",
     data
 ))
 
-print(filtered_region)
+for row in cleaned_data:
+    row["Year"] = int(row["Year"])
+    row["Value"] = float(row["Value"])
 
-if not filtered_region:
-    print("No data for selected regions")
-    exit()
+region_filtered = list(filter(lambda r: r["Region"] in regions, cleaned_data))
+country_filtered = list(filter(lambda r: r["Country"] == Country, cleaned_data)) if Country else []
 
-elif any(row["Year"] == "" for row in filtered_region):
-    print("Year section empty for this region")
-    exit()
+region_sum = sum(map(lambda r: r["Value"], region_filtered))
+region_avg = region_sum / len(region_filtered) if region_filtered else 0
 
-filtered_year = list(filter(
-    lambda row: int(row["Year"]) in years,
-    filtered_region
-))
+country_sum = sum(map(lambda r: r["Value"], country_filtered))
+country_avg = country_sum / len(country_filtered) if country_filtered else 0
 
-if not filtered_year:
-    print("No data for selected year in the region")
-    exit()
-
-if any(row["Value"] == "" for row in filtered_region):
-    print("Value section empty for this region")
-    exit()
-
-print(filtered_year)
+print("Sum of GDP of Regions:", region_sum)
+print("Average GDP of Regions:", region_avg)
+print("Average GDP of a Country:", country_avg)

@@ -1,22 +1,15 @@
-
 import json
 import csv
 
-#load config
-with open("SDA-Project/config.json") as c:
+with open("config.json") as c:
     config = json.load(c)
 
-
 regions = config["regions"]
-years=config["years"]
-operations=config["operations"]
-dashboard=config["dashboard"]
+years = config["years"]
+operations = config["operations"]
+dashboard = config["dashboard"]
+Country = config.get("Country")
 
-with open("SDA-Project/data.csv", newline="") as f:
+with open("data.csv", newline="") as f:
     reader = csv.DictReader(f)
     data = list(reader)
-
-if not data:
-    print("csv file is empty")
-    exit()
-

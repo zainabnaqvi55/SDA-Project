@@ -1,6 +1,7 @@
 {
-    "Region":"Asia",
-    "Year":"2022",
-    "Operation":"Sum",
-    "Dashboard_type":"Bar_graph"
+    "regions": ["Asia"],
+    "years": [2022],
+    "operations": "Average",
+    "dashboard": "Bar_graph",
+    "Country": "Pakistan"
 }
